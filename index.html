@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <link rel="stylesheet" href="./src/style/reset.css">
+    <link rel="stylesheet" href="./src/style/main.css">
+</head>
+<body>
+  
+<div class="container__menu">
+        <div class="menu">
+            <div class="menu-time">
+                <h2 style="color: rgb(0, 132, 255);">Tempo Restante</h2>
+                <h2 id="time-left">60</h2>
+            </div>
+            <div class="menu-score">
+                <h2 style="color: rgb(0, 132, 255);">Seus Pontos</h2>
+                <h2 id="pontos">0</h2>
+            </div>
+        </div>
+
+    <div class="container">
+        <h3>JOGO DA MEMÓRIA</h3>
+        <div class="game"></div>
+        <h3 id="mensagemVitoria" style="display: none;"></h3>
+        <h3 id="mensagemDerrota" style="display: none;"></h3>
+        <button class="iniciar" id="iniciar" onclick="window.location.reload()"> INICIAR JOGO </button>
+    </div>
+</div>
+<script src="./src/scripts/engine.js" defer></script>
+</body>
+</html>
