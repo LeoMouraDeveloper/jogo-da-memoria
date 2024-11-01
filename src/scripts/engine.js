@@ -1,60 +1,42 @@
 const emojis = [
-    "👀",
-    "👀",
-    "🤔",
-    "🤔",
-    "😆",
-    "😆",
-    "😉",
-    "😉",
-    "💖",
-    "💖",
-    "🌹",
-    "🌹",
-    "🥵",
-    "🥵",
-    "🤡",
-    "🤡",
-    "🎃",
-    "🎃",
-    "⚽",
-    "⚽",
-    "♠",
-    "♠",
-    "♣",
-    "♣",
-    "♦",
-    "♦",
-    "♥",
-    "♥",
-    "🧨",
-    "🧨"
+    "👀", "👀", "🤔", "🤔", "😆", "😆", "😉", "😉",
+    "💖", "💖", "🌹", "🌹", "🥵", "🥵", "🤡", "🤡",
+    "🎃", "🎃", "⚽", "⚽", "♠", "♠", "♣", "♣",
+    "♦", "♦", "♥", "♥", "🧨", "🧨"
 ];
+
 let cartaAberta = [];
-let embaralhaEmojis = emojis.sort(() => (Math.random() > 0.5 ? 2 : -1))
-let resultado = 0
-let pontos = document.querySelector("#pontos")
-let tempoAtual = 60
-const tempoRestante = document.querySelector("#time-left")
+let resultado = 0;
+let pontos = document.querySelector("#pontos");
+let tempoAtual = 60;
+const tempoRestante = document.querySelector("#time-left");
 let intervalo = 0;
 
-for (let i =0; i < emojis.length; i++ ){
-
-    let box = document.createElement("div");
-    box.className = "item";
-    box.innerHTML = embaralhaEmojis[i];
-    box.onclick = clicar;
-    document.querySelector(".game").appendChild(box)
+function embaralharEmojis() {
+    return emojis.sort(() => (Math.random() > 0.5 ? 1 : -1));
 }
 
-function iniciar(){
-    tempoAtual = 60; 
+function iniciarContagem() {
+    tempoAtual = 60;
     tempoRestante.textContent = tempoAtual;
 
     clearInterval(intervalo);
     
     document.querySelector("#mensagemVitoria").style.display = "none";
     document.querySelector("#mensagemDerrota").style.display = "none";
+
+    const gameContainer = document.querySelector(".game");
+    gameContainer.innerHTML = ""; 
+
+    const embaralhaEmojis = embaralharEmojis(); 
+
+    for (let i = 0; i < emojis.length; i++) {
+        let box = document.createElement("div");
+        box.className = "item";
+        box.innerHTML = embaralhaEmojis[i];
+        box.onclick = clicar;
+        gameContainer.appendChild(box);
+    }
 
     intervalo = setInterval(contagem, 1000);
 }
@@ -63,7 +45,7 @@ function contagem() {
     tempoAtual--;
     tempoRestante.textContent = tempoAtual;
 
-    if(tempoAtual <= 0){
+    if (tempoAtual <= 0) {
         clearInterval(intervalo);
         const fimDoJogo = document.getElementById("mensagemDerrota");
         fimDoJogo.innerHTML = "Game Over!!! 👻👻👻";
@@ -87,21 +69,19 @@ function clicar() {
 
 function checkMatch() {
     if (cartaAberta[0].innerHTML === cartaAberta[1].innerHTML) {
-        
         cartaAberta[0].classList.add("boxMatch");
         cartaAberta[1].classList.add("boxMatch");
         resultado++;
         pontos.textContent = resultado;
-    
-    }else{
+    } else {
         cartaAberta[0].classList.remove("boxOpen");
         cartaAberta[1].classList.remove("boxOpen");
     }
 
-    cartaAberta = []
+    cartaAberta = [];
 
-    if (document.querySelectorAll(".boxMatch").length == emojis.length) {
-        clearInterval(timerInterval);
+    if (document.querySelectorAll(".boxMatch").length === emojis.length) {
+        clearInterval(intervalo);
         const fimDoJogo = document.getElementById("mensagemVitoria");
         fimDoJogo.innerHTML = "Você Venceu !!! 🎉🎉🎉";
         fimDoJogo.style.display = "block";
